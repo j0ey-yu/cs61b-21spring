@@ -25,15 +25,20 @@ public class ArrayDeque<T> {
         nextLast = size;    // se nextLast to the current size;
     }
     public void addFirst(T item){
-        if(size == items.length){
+        if(size == items.length) {
             resize((items.length) * 2);
+        }
         items[nextFirst] = item;
         size ++;
+        /*
+        In Java, when the modulo operation is applied to a negative number, the result can indeed be negative.
+        For example, -1 % 8 would result in -1, not 7.
+        This behavior is distinct from some other programming languages where the modulo operation might always return a non-negative result.
+         */
         nextFirst = (nextFirst - 1 + items.length) % items.length;
         // resize? or size == items.length?
 //        if(nextFirst == nextLast){
 //            resize(); // call the resize when the array is full, rather than just 2 next equals
-        }
     }
     public void addLast(T item){
         if(size == items.length){
@@ -41,13 +46,10 @@ public class ArrayDeque<T> {
         }
         items[nextLast] = item;
         size ++;
-        nextLast = (nextLast + 1 - items.length) % items.length;
+        nextLast = (nextLast + 1 ) % items.length; // you don't need to add a items.length
     }
     public boolean isEmpty(){
-        if(size == 0)
-            return  true;
-        else
-            return false;
+        return size==0;
     }
     public int size(){
         return size;
@@ -60,7 +62,7 @@ public class ArrayDeque<T> {
     }
     public T removeFirst(){
         if(isEmpty())   return null;
-        nextFirst = (nextFirst + 1 - items.length) % items.length;
+        nextFirst = (nextFirst + 1) % items.length; //also correct here
         T temp = items[nextFirst];
         items[nextFirst] = null;
         size --;
