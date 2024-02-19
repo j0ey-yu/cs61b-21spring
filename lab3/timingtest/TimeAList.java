@@ -5,6 +5,12 @@ import edu.princeton.cs.algs4.Stopwatch;
  * Created by hug.
  */
 public class TimeAList {
+    /**
+     * Prints a timing table for the construction of ALists of various sizes.
+     * @param Ns AList containing sizes of the ALists to be tested.
+     * @param times AList containing times taken for each test.
+     * @param opCounts AList containing the number of operations performed in each test.
+     */
     private static void printTimingTable(AList<Integer> Ns, AList<Double> times, AList<Integer> opCounts) {
         System.out.printf("%12s %12s %12s %12s\n", "N", "time (s)", "# ops", "microsec/op");
         System.out.printf("------------------------------------------------------------\n");
@@ -23,5 +29,20 @@ public class TimeAList {
 
     public static void timeAListConstruction() {
         // TODO: YOUR CODE HERE
+        AList<Integer> Ns = new AList<>();
+        AList<Double> times = new AList<>();
+        AList<Integer> opCounts = new AList<>();
+        for (int N = 1000; N <= 128000; N *= 2) {
+            Ns.addLast(N);
+            Stopwatch sw = new Stopwatch();
+            AList<Integer> test = new AList<>();
+            for(int i = 0; i < N; i++){
+                test.addLast(i);
+            }
+            double time = sw.elapsedTime();
+            times.addLast(time);
+            opCounts.addLast(N); // Since each addLast operation is counted as 1 operation
+        }
+        printTimingTable(Ns,times,opCounts);
     }
 }
